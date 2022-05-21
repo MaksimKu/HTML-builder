@@ -13,7 +13,9 @@ async function copyDir() {
     const filesCopy = await fsPromises.readdir(FilesCopyPath,  { withFileTypes: true });
     for (let item of filesCopy) {
       const copyItemPath = path.join(FilesCopyPath, item.name);
-      fs.unlink(`${copyItemPath}`)
+      fs.unlink(`${copyItemPath}`, (err => {
+        if (err) {}
+    }))};
 
 const files = await fsPromises.readdir(FilesPath,  { withFileTypes: true });
   for (let item of files) {
@@ -21,6 +23,5 @@ const files = await fsPromises.readdir(FilesPath,  { withFileTypes: true });
     const copyItemPath = path.join(FilesCopyPath, item.name);
     await fsPromises.copyFile(currentItemPath, copyItemPath);
 }
-
 }
 copyDir();
